@@ -16,7 +16,7 @@ public class Main {
         List<Integer> wipLimits = new ArrayList<Integer>();
         List<List<Integer>> leadTimeCandidatesPerColumn = new ArrayList<List<Integer>>();
         List<String> namesOfColumnsAffectedByGlobalWIPLimit = new ArrayList<String>();
-        Integer globalWIPLimit = 10;
+        Integer globalWIPLimit = 9;
         initializeVariables(columnNames, wipLimits, leadTimeCandidatesPerColumn, namesOfColumnsAffectedByGlobalWIPLimit, globalWIPLimit);
         List<Integer> leadTimes = new ArrayList<Integer>();
 
@@ -61,28 +61,28 @@ public class Main {
         namesOfColumnsAffectedByGlobalWIPLimit.add("----TESTING----");
 
         // Number of Items still on our backlog
-        wipLimits.add(1);
+        wipLimits.add(87);
         // Max number of items allowed at Developing
-        wipLimits.add(1);
+        wipLimits.add(9);
         // Max number of items allowed at Developing
-        wipLimits.add(1);
+        wipLimits.add(9);
         // Max number of items allowed at Developing
-        wipLimits.add(1);
+        wipLimits.add(9);
         // Max number of items allowed at Developing
-        wipLimits.add(1);
+        wipLimits.add(9);
         // Same number as the backlog
-        wipLimits.add(1);
+        wipLimits.add(87);
 
         // Backlog
         leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0)));
         // Developing
-        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(1,2,3)));
+        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0, 1, 1, 1, 3, 0, 1, 0, 3, 2, 1, 1, 0, 1, 1, 4, 0, 0, 0, 0, 1, 5, 1, 1, 1, 2, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 19, 0)));
         // Code Review
-        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(1,2,3)));
+        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 3, 0, 0, 1, 0, 0, 2, 3, 0, 4, 1, 2, 3, 3, 2, 1, 7, 3, 1, 1, 3, 0, 1, 1, 1, 2, 2, 6, 3, 2, 9, 0, 9)));
         // Ready to Test
-        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(1,2,3)));
+        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6, 2, 0, 3, 5, 2, 0, 5, 1, 2, 0, 4, 0, 0, 0, 0, 2, 0, 2, 5, 0, 0, 1, 11, 14, 14)));
         // Testing
-        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(1,2)));
+        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 3, 0, 0, 2, 1, 0, 3, 0, 0, 0, 0, 0, 2, 4, 4, 0, 2)));
         // Done
         leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0)));
 

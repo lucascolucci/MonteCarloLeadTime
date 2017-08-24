@@ -94,15 +94,16 @@ public class Simulator {
 
     private void runDailySimulation() {
         for(int index = board.getColumns().size()-2; index >=0; index--){
+            if(index == 0 && globalWipLimitReached(index))
+                continue;
+            //System.out.println(board.numberOfCardsInColumns(namesOfColumnsAffectedByGlobalWIPLimit)>=globalWIPLimit);
             moveCardsInColumn(index);
         }
     }
 
     private void moveCardsInColumn(int index) {
         Column column = board.getColumns().get(index);
-        if(index == 0 && globalWipLimitReached(index)){
-            return;
-        }
+
 
         List<Card> cardsToBeRemoved = new ArrayList<Card>();
         for(Card card : column.getCards()){
@@ -121,8 +122,11 @@ public class Simulator {
         for(int i = 1;
             nextColumn.hasSpace() && card.getTimeLeft() == 0 && index + i  < board.getColumns().size();
             i++) {
+            if(index == 0 && globalWipLimitReached(index))
+                break;
             card.setTimeLeft(simulateColumnLeadTime(nextColumn.getLeadTimeCandidates()));
             nextColumn.addCard(card);
+
             if(i > 1)
                 thisColumn.getCards().remove(card);
 
@@ -146,7 +150,4 @@ public class Simulator {
         return item;
     }
 
-    private void removeCardsFromColumns(){
-
-    }
 }
