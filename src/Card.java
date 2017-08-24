@@ -36,6 +36,6 @@ public class Card {
     }
 
     public void printCard(){
-        System.out.print("       |-- "+this.getTotalLeadTime()+" --|");
+        System.out.print("       |-- "+this.getTotalLeadTime()+","+this.getTimeLeft()+" --|");
     }
 }

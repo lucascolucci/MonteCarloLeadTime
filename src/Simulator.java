@@ -81,39 +81,62 @@ public class Simulator {
     }
 
     public int run(){
-        int totalDays = 0;
-        for(int day = 0; !board.allDone(); day++){
-            for(int index = board.getColumns().size()-2; index >=0; index--){
-                Column column = board.getColumns().get(index);
-                if(index == 0 && board.numberOfCardsInColumns(namesOfColumnsAffectedByGlobalWIPLimit) >= globalWIPLimit){
-                    continue;
-                }
+        int totalDays;
+        //printBoard();
 
-
-                List<Card> cardsToBeRemoved = new ArrayList<Card>();
-                for(Card card : column.getCards()){
-                    if(card.getTimeLeft() == 0 && index > 0){
-                        card.setTimeLeft(simulateColumnLeadTime(column.getLeadTimeCandidates()));
-                    }
-                    else {
-                        if(index > 0) {
-                            card.incrementTotalLeadTime();
-                            card.decreaseTimeLeft();
-                        }
-                        Column nextColumn = board.getColumns().get(index+1);
-                        if (card.getTimeLeft() == 0 && nextColumn.hasSpace()) {
-                            nextColumn.addCard(card);
-                            cardsToBeRemoved.add(card);
-                        }
-                    }
-                }
-                column.getCards().removeAll(cardsToBeRemoved);
-                totalDays = day;
-            }
+        for(totalDays = 0; !board.allDone(); totalDays++){
+            runDailySimulation();
             //printBoard();
         }
         //System.out.println("Total Elapsed Time - " + totalDays);
-        return totalDays;
+        return totalDays-1;
+    }
+
+    private void runDailySimulation() {
+        for(int index = board.getColumns().size()-2; index >=0; index--){
+            moveCardsInColumn(index);
+        }
+    }
+
+    private void moveCardsInColumn(int index) {
+        Column column = board.getColumns().get(index);
+        if(index == 0 && globalWipLimitReached(index)){
+            return;
+        }
+
+        List<Card> cardsToBeRemoved = new ArrayList<Card>();
+        for(Card card : column.getCards()){
+            moveCardForward(index, column, cardsToBeRemoved, card);
+        }
+        column.getCards().removeAll(cardsToBeRemoved);
+    }
+
+    private void moveCardForward(int index, Column column, List<Card> cardsToBeRemoved, Card card) {
+        if(index > 0) {
+            card.incrementTotalLeadTime();
+            card.decreaseTimeLeft();
+        }
+        Column thisColumn = column;
+        Column nextColumn = board.getColumns().get(index + 1);
+        for(int i = 1;
+            nextColumn.hasSpace() && card.getTimeLeft() == 0 && index + i  < board.getColumns().size();
+            i++) {
+            card.setTimeLeft(simulateColumnLeadTime(nextColumn.getLeadTimeCandidates()));
+            nextColumn.addCard(card);
+            if(i > 1)
+                thisColumn.getCards().remove(card);
+
+            cardsToBeRemoved.add(card);
+
+            thisColumn = nextColumn;
+            if(index+i+1 == board.getColumns().size())
+                continue;
+            nextColumn = board.getColumns().get(index + i + 1);
+        }
+    }
+
+    private boolean globalWipLimitReached(int index) {
+        return board.numberOfCardsInColumns(namesOfColumnsAffectedByGlobalWIPLimit) >= globalWIPLimit;
     }
 
     private int simulateColumnLeadTime(List<Integer> leadTimeCandidates) {
@@ -123,5 +146,7 @@ public class Simulator {
         return item;
     }
 
+    private void removeCardsFromColumns(){
 
+    }
 }
