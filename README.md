@@ -3,7 +3,7 @@ Java system to run monte carlo simulations based on LT.
 
 
 ## How to run it
-###1. Manually inputting data
+### 1. Manually inputting data
 Every editable field in in "main" :P
 
 Possible Editions
@@ -20,7 +20,7 @@ Possible Editions
 It is important to notice that the order of the values in the array should be the same.
 
 
-###2. Using Google Sheets
+### 2. Using Google Sheets
 Create a new google sheets document.
 Follow the following structure on your sheet:
 line 1: Column Names
@@ -35,8 +35,8 @@ On the GoogleSheetsConnection.java file, edit the spreadsheetID and readingRange
 
 
 ## Results
-###1. Terminal printed
+### 1. Terminal printed
 If you run it on your terminal, or on an IDE, you will receive all the simulations LTs, one per line.
 
-###2. Spreadsheet results
+### 2. Spreadsheet results
 On the GoogleSheetsConnection.java file, edit the spreadsheetID and writingRange according to your specifications
