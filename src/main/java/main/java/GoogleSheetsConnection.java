@@ -103,7 +103,7 @@ public class GoogleSheetsConnection {
         Sheets service = getSheetsService();
 
         String spreadsheetId = "1vKcL-rbR0PS14yL4lmQRmwUhjKtAfAzZl8rKCzfzUis";
-        String range = "Monte Carlo w/ LT!B2:K5";
+        String range = "Monte Carlo w/ LT!B2:K6";
         ValueRange response = service.spreadsheets().values()
                 .get(spreadsheetId, range)
                 .execute();

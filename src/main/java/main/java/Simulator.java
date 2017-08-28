@@ -92,11 +92,11 @@ public class Simulator {
 
     public int run(){
         int totalDays;
-        printBoard();
+        //printBoard();
 
         for(totalDays = 0; !board.allDone(); totalDays++){
             runDailySimulation();
-            printBoard();
+            //printBoard();
         }
         //System.out.println("Total Elapsed Time - " + totalDays);
         return totalDays-1;

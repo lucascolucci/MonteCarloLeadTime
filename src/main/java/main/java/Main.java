@@ -17,10 +17,9 @@ public class Main {
         List<Integer> wipLimits = new ArrayList<Integer>();
         List<List<Integer>> leadTimeCandidatesPerColumn = new ArrayList<List<Integer>>();
         List<String> namesOfColumnsAffectedByGlobalWIPLimit = new ArrayList<String>();
-        Integer globalWIPLimit = 9;
-        initializeVariables(columnNames, wipLimits, leadTimeCandidatesPerColumn, namesOfColumnsAffectedByGlobalWIPLimit, globalWIPLimit);
+        Integer globalWIPLimit = initializeVariablesAndReturnGlobalWipLimit(columnNames, wipLimits, leadTimeCandidatesPerColumn, namesOfColumnsAffectedByGlobalWIPLimit);
         List<Integer> leadTimes = new ArrayList<Integer>();
-        for(int i = 0; i < 1; i++){
+        for(int i = 0; i < 5000; i++){
             Simulator simulator = new Simulator(columnNames, wipLimits, leadTimeCandidatesPerColumn, namesOfColumnsAffectedByGlobalWIPLimit, globalWIPLimit);
             simulator.initializeBoard();
             leadTimes.add(simulator.run());
@@ -45,7 +44,7 @@ public class Main {
     }
 
 
-    private static void initializeVariables(List<String> columnNames, List<Integer> wipLimits, List<List<Integer>> leadTimeCandidatesPerColumn, List<String> namesOfColumnsAffectedByGlobalWIPLimit, Integer globalWIPLimit) {
+    private static int initializeVariablesAndReturnGlobalWipLimit(List<String> columnNames, List<Integer> wipLimits, List<List<Integer>> leadTimeCandidatesPerColumn, List<String> namesOfColumnsAffectedByGlobalWIPLimit) {
 
         GoogleSheetsConnection googleSheetsConnection = new GoogleSheetsConnection();
         try {
@@ -69,13 +68,17 @@ public class Main {
                     namesOfColumnsAffectedByGlobalWIPLimit.add(columnName);
 
             }
+
+            int globalWIPLimit = Integer.valueOf(values.get(4).get(0).toString());
+
             System.out.println("columnNames: " + columnNames);
             System.out.println("namesOfColumnsAffectedByGlobalWIPLimit: " + namesOfColumnsAffectedByGlobalWIPLimit);
             System.out.println("wipLimits: " + wipLimits);
             System.out.println("leadTimes: " + leadTimeCandidatesPerColumn);
+            System.out.println("globalWipLimit: " + globalWIPLimit);
 
-
-
+            //Global Wip Limit
+            return globalWIPLimit;
         } catch (java.io.IOException e){
 
         }
@@ -117,6 +120,6 @@ public class Main {
 //        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 3, 0, 0, 2, 1, 0, 3, 0, 0, 0, 0, 0, 2, 4, 4, 0, 2)));
 //        // Done
 //        leadTimeCandidatesPerColumn.add(new ArrayList<Integer>(Arrays.asList(0)));
-
+    return 0;
     }
 }
