@@ -13,7 +13,8 @@ public class Main {
 
     public static void main(String [ ] args)
     {
-        List<String> columnNames = new ArrayList<String>();
+        GoogleSheetsConnection googleSheetsConnection = new GoogleSheetsConnection();
+                List<String> columnNames = new ArrayList<String>();
         List<Integer> wipLimits = new ArrayList<Integer>();
         List<List<Integer>> leadTimeCandidatesPerColumn = new ArrayList<List<Integer>>();
         List<String> namesOfColumnsAffectedByGlobalWIPLimit = new ArrayList<String>();
@@ -26,6 +27,11 @@ public class Main {
         }
 
         printArrayLineByLine(leadTimes);
+        try {
+            googleSheetsConnection.writeResults(leadTimes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Average LT is: " + average(leadTimes));
     }
 

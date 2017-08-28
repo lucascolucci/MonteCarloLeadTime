@@ -30,3 +30,13 @@ line 4: Lead Time data for each column
 line 5: Global Wip Limit Value
 
 ![Alt text](SpreadsheetExample.png?raw=true "")
+
+On the GoogleSheetsConnection.java file, edit the spreadsheetID and readingRange according to your specifications
+
+
+## Results
+###1. Terminal printed
+If you run it on your terminal, or on an IDE, you will receive all the simulations LTs, one per line.
+
+###2. Spreadsheet results
+On the GoogleSheetsConnection.java file, edit the spreadsheetID and writingRange according to your specifications

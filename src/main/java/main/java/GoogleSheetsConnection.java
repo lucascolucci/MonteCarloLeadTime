@@ -16,6 +16,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,13 +39,18 @@ public class GoogleSheetsConnection {
     /** Global instance of the HTTP transport. */
     private static HttpTransport HTTP_TRANSPORT;
 
+    private String spreadsheetId = "1vKcL-rbR0PS14yL4lmQRmwUhjKtAfAzZl8rKCzfzUis";
+    private String readingRange = "Monte Carlo w/ LT!B2:K6";
+    private String writingRange = "Monte Carlo w/ LT!M2:M";
+
+
     /** Global instance of the scopes required by this quickstart.
      *
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/sheets.googleapis.com-java-quickstart
      */
     private static final List<String> SCOPES =
-            Arrays.asList(SheetsScopes.SPREADSHEETS_READONLY);
+            Arrays.asList(SheetsScopes.SPREADSHEETS);
 
     static {
         try {
@@ -99,17 +105,33 @@ public class GoogleSheetsConnection {
     }
 
     public List<List<Object>> getLTValues() throws IOException {
-        // Build a new authorized API client service.
         Sheets service = getSheetsService();
 
-        String spreadsheetId = "1vKcL-rbR0PS14yL4lmQRmwUhjKtAfAzZl8rKCzfzUis";
-        String range = "Monte Carlo w/ LT!B2:K6";
         ValueRange response = service.spreadsheets().values()
-                .get(spreadsheetId, range)
+                .get(spreadsheetId, readingRange)
                 .execute();
         List<List<Object>> values = response.getValues();
 
         return values;
+    }
+
+    public void writeResults(List<Integer> LeadTime) throws IOException{
+        Sheets service = getSheetsService();
+
+        List<List<Object>> values = new ArrayList<List<Object>>();
+
+        for(Object LT : LeadTime){
+            values.add(Arrays.asList(LT));
+        }
+
+
+        ValueRange body = new ValueRange()
+                .setValues(values);
+        UpdateValuesResponse result =
+                service.spreadsheets().values().update(spreadsheetId,writingRange, body)
+                        .setValueInputOption("RAW")
+                        .execute();
+
     }
 
 }
